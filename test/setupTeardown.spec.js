@@ -1,40 +1,28 @@
+// Intercale funções entre os testes definidos no arquivo test/setupTeardown.spec.js.
+
 const adventure = require('../src/setupTeardown');
-/*
-Num universo não tão distante, um grupo de aventureiros da Trybe enfrentam uma série de testes.
-O grupo parte em direção ao sucesso, mas,
-devido a ameaça de criaturas temíveis, o grupo não chegará inteiro ao fim.
-Após cada aventura um de nossos aventureiros cairá.
-Cada um dos testes abaixo verifica a quantidade de aventureiros após cada iteração.
-Sua missão aqui é:
-
-  - Use a função randomAttack do objeto adventure
-  que remove um dos aventureiros toda vez que é chamada,
-  ela deve funcionar entre cada teste.
-  Opcional:
-  - Para ficar mais visível, imprima na tela após cada teste o grupo de aventureiros restante.
-  - No fim dos testes, imprima uma mensagem com o nome do aventureiro que sobreviveu.
-
-PS: Os codinomes dos aventureiros são reais! Tentem descobrir quem é quem!
-
-ATENÇÃO!!! Edite apenas este arquivo. Não altere os arquivos da pasta 'src'.
-*/
 
 describe('quem sobreviveu?', () => {
-  // Adicione seu código aqui
+  const specialistName = adventure.specialists; // pega o array de especialistas aventureiros
+  const roundSpecs = () => specialistName.map((spec) => spec.nome); // faz um map no array de especialistas para pegar o nome;
+
+  beforeEach(() => adventure.randomAttack()); // antes de cada teste, chama a função randomAttack() que está importada em adventure
+  afterEach(() => console.log(`Sobrevivente(s) do round: ${(roundSpecs()).join(', ')}`)); // depois de cada teste imprime na tela o nome dos sobreviventes separados por vírgula;
+  afterAll(() => console.log(specialistName[0].nome)); // Ao final dos testes imprime na tela o último sobrevivente da saga.
 
   test('depois da primeira aventura', () => {
-    expect(adventure.specialists.length).toBe(5);
+    expect(specialistName.length).toBe(5);
   });
   test('depois da segunda aventura', () => {
-    expect(adventure.specialists.length).toBe(4);
+    expect(specialistName.length).toBe(4);
   });
   test('depois da terceira aventura', () => {
-    expect(adventure.specialists.length).toBe(3);
+    expect(specialistName.length).toBe(3);
   });
   test('depois da quarta aventura', () => {
-    expect(adventure.specialists.length).toBe(2);
+    expect(specialistName.length).toBe(2);
   });
   test('depois da quinta aventura', () => {
-    expect(adventure.specialists.length).toBe(1);
+    expect(specialistName.length).toBe(1);
   });
 });
